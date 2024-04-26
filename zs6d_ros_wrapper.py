@@ -113,7 +113,7 @@ class ZS6D_ROS:
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config_file', default="./zs6d_configs/bop_eval_configs/cfg_ycbv_inference_bop.json")
+    parser.add_argument('--config_file', default="./zs6d_configs/bop_eval_configs/cfg_ros_ycbv_inference_bop.json")
     opt = parser.parse_args()
     return opt
 
