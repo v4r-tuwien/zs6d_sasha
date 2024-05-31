@@ -1,0 +1,40 @@
+version: "2.4"
+
+################################################################################
+
+services:
+  zs6d:
+    hostname: zs6d
+    runtime: nvidia
+    privileged: true
+    environment:
+      # Display X Server GUIs.
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+# Configure the Nvidia Docker interface.
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - NVIDIA_REQUIRE_CUDA=cuda>=10.1
+      # Configure the PulseAudio interface.
+      - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
+      - SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
+    build:
+      dockerfile: ./Dockerfile
+
+    volumes:
+      # Map repository root for convenient access.
+      - /home/v4r/demo/pose_estimators/ZS6D/:/code
+      # Grant display access to X Server.
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      # Grant audio access to PulseAudio.
+      - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
+      - ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK}
+    # Use 'network_mode: host' with the real robot or 'network_mode: bridge' for separated networks (multiple independent containers).
+    network_mode: host
+    command:  /bin/bash
+    stdin_open: true # docker run -i
+    tty: true
+    
+#    docker run -it --runtime nvidia --privileged -e DISPLAY=${DISPLAY} -e QT_X11_NO_MITSHM=1 -e NVIDIA_VISIBLE_DEVICES=all -e NVIDIA_DRIVER_CAPABILITIES=all -e NVIDIA_REQUIRE_CUDA="cuda>=10.1" -e PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native -e SSH_AUTH_SOCK=${SSH_AUTH_SOCK} -v /home/v4r/demo/pose_estimators/ZS6D/:/code -v /tmp/.X11-unix:/tmp/.X11-unix -v ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native -v ${SSH_AUTH_SOCK}:${SSH_AUTH_SOCK} --net host zs6d-zs6d /bin/bash 
+    
+#    docker run -it --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/v4r/demo/pose_estimators/ZS6D/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d-zs6d /bin/bash 

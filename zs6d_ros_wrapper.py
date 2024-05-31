@@ -74,8 +74,11 @@ class ZS6D_ROS:
              rospy.logwarn("Missing depth image in the goal.")
 
         print("RGB", image.shape, image.dtype)
+
+
         mask_detections = [ros_numpy.numpify(mask_img).astype(np.uint8)
                             for mask_img in req.mask_detections]
+
         print("mask", mask_detections[0].shape, mask_detections[0].dtype)
 
 
