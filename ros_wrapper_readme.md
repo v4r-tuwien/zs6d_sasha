@@ -1,5 +1,5 @@
 To run ros wrapper do the following: (nvidia-docker needed)
-
+- download ycbv stuff from https://drive.google.com/file/d/1wB8SFp0DiMb-KLTqQiG7PvrY3AzM6uge/view?usp=sharing and put it into ./templates
 - edit camera intrinsics and obj name mappings
 
 zs6d_configs/bop_eval_configs/cfg_ros_ycbv_inference_bop.json
@@ -13,6 +13,7 @@ xhost local:docker
 docker build -t zs6d .
 
 docker run -it --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/v4r/demo/pose_estimators/ZS6D/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d /bin/bash 
+docker run -it --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/lexi/a/zs6d_sasha/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d /bin/bash 
 
 (test -> via glxinfo | grep "OpenGL version string" should be OpenGL version string: > 3.xx and show nvidia driver version)
 
