@@ -97,6 +97,7 @@ if __name__=="__main__":
                 files = os.listdir(path_template_folder)
                 filtered_files = list(filter(lambda x: not x.startswith('mask_'), files))
                 filtered_files.sort(key=lambda x: os.path.getmtime(os.path.join(path_template_folder,x)))
+                filtered_files = sorted(filtered_files)
 
                 tmp_list = []
 
