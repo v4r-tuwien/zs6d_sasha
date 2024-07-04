@@ -12,8 +12,9 @@ xhost local:docker
 
 docker build -t zs6d .
 
-docker run -it --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/v4r/demo/pose_estimators/ZS6D/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d /bin/bash 
-docker run -it --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/lexi/a/zs6d_sasha/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d /bin/bash 
+docker run -it --rm --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/v4r/demo/pose_estimators/ZS6D/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d /bin/bash 
+
+docker run -it --rm --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/lexi/a/zs6d_sasha/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d /bin/bash 
 
 (test -> via glxinfo | grep "OpenGL version string" should be OpenGL version string: > 3.xx and show nvidia driver version)
 
@@ -23,7 +24,7 @@ python prepare_templates_and_gt.py
 
 - to start ros wrapper run
 
-docker run -it --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/v4r/demo/pose_estimators/ZS6D/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d 
+docker run -it --rm --runtime nvidia --privileged -e DISPLAY=${DISPLAY}  -e NVIDIA_DRIVER_CAPABILITIES=all -v /home/v4r/demo/pose_estimators/ZS6D/:/code -v /tmp/.X11-unix:/tmp/.X11-unix --net host zs6d 
 
 
 test
