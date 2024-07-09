@@ -106,8 +106,7 @@ if __name__=="__main__":
                     # Preparing mask and bounding box [x,y,w,h]
                     mask_path = os.path.join(path_template_folder, f"mask_{file}")
                     mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
-                    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-                    x, y, w, h = cv2.boundingRect(contours[0])
+                    x, y, w, h = cv2.boundingRect(mask)
                     crop_size = max(w,h)
 
                     # Preparing cropped image and desc
