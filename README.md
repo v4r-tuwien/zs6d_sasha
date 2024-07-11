@@ -6,7 +6,7 @@
 To run the ros wrapper do the following:
 
 - set up the NVIDIA container toolkit
-- download ycbv templates from [INPUT LINK HERE] and put it into ./templates
+- download ycbv templates from [this link](https://drive.google.com/file/d/1t0nk_1R931LYl-F9nrYLfk-jKxoki-0A/view?usp=sharing) and put the ycbv folder into ./templates
 - edit camera intrinsics and obj name mappings in ```zs6d_configs/bop_eval_configs/cfg_ros_ycbv_inference_bop.json```. The keys in the object name mapping are the names that are passed to the pose estimator and the values are the bop object ids (as strings).
 - Set the ROS_IP and ROS_MASTER_URI in ```ros_entrypoint.sh```.
 - update the submodules with ```git submodule update --init --recursive```
