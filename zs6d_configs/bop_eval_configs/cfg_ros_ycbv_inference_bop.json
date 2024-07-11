@@ -1,5 +1,5 @@
 { "templates_gt_path": "./gts/template_gts/ycbv_template_gt.json",
-  "template_subset": 4,
+  "template_subset": 1,
   "norm_factor_path":"./templates/ycbv_desc/models_xyz/norm_factor.json",
   "image_resolution":[480, 640],
   "cam_K": [538.391033533567, 0.0, 315.3074696331638, 0.0, 538.085452058436, 233.0483557773859, 0.0, 0.0, 1.0],
