@@ -9,3 +9,4 @@ zs6d_old.py
 pose_estimation.log
 evaluate_zs6d_bop_with_logging.py
 test/*
+torch_cache
