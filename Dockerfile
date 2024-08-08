@@ -137,7 +137,4 @@ RUN apt-get update \
 
 WORKDIR /code
 
-COPY ros_entrypoint.sh /
-RUN chmod +x /ros_entrypoint.sh
-ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["python", "/code/zs6d_ros_wrapper.py"]
