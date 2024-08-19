@@ -24,8 +24,12 @@ if __name__=="__main__":
     with open(os.path.join(args.config_file),'r') as f:
         config = json.load(f)
 
-    with open(os.path.join(config['path_models_info_json']), 'r') as f:
-        models_info = json.load(f)
+    if 'path_models_info_json' in config and os.path.exists(config['path_models_info_json']):
+        with open(os.path.join(config['path_models_info_json']), 'r') as f:
+            models_info = json.load(f)
+    else:
+        models_info = None
+        print("No models info provided, only basic information will be stored in the template ground truth file.")
 
     obj_poses = np.load(config['path_template_poses'])
 
@@ -85,8 +89,6 @@ if __name__=="__main__":
 
                 obj_id = template_name.split("_")[-1]
 
-                model_info = models_info[str(obj_id)]
-
                 obj_model = Model3D()
                 model_path = os.path.join(config['path_output_models_xyz'], f"obj_{int(obj_id):06d}.ply")
 
@@ -120,11 +122,14 @@ if __name__=="__main__":
                     R = obj_poses[i][:3,:3]
                     t = obj_poses[i].T[-1,:3]
                     sym_continues = [0,0,0,0,0,0]
-                    keys = model_info.keys()
 
-                    if('symmetries_continuous' in keys):
-                        sym_continues[:3] = model_info['symmetries_continuous'][0]['axis']
-                        sym_continues[3:] = model_info['symmetries_continuous'][0]['offset']
+                    if models_info is not None:
+                        model_info = models_info[str(obj_id)]
+                        keys = model_info.keys()
+
+                        if('symmetries_continuous' in keys):
+                            sym_continues[:3] = model_info['symmetries_continuous'][0]['axis']
+                            sym_continues[3:] = model_info['symmetries_continuous'][0]['offset']
                     
                     rot_pose, rotation_lock = get_sympose(R, sym_continues)                 
                     
@@ -144,7 +149,7 @@ if __name__=="__main__":
                                 "cam_R_m2c": R.tolist(),
                                 "cam_t_m2c": t.tolist(),
                                 "model_path": os.path.join(config['path_object_models_folder'], f"obj_{int(obj_id):06d}.ply"),
-                                "model_info": models_info[str(obj_id)],
+                                "model_info": models_info[str(obj_id)] if models_info is not None else None,
                                 "cam_K": cam_K.tolist(),
                                 "img_crop": os.path.join(path_to_template_desc, file),
                                 "img_desc": os.path.join(path_to_template_desc, f"{file.split('.')[0]}.npy"),
